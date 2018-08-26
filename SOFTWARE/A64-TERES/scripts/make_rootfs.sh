@@ -77,7 +77,10 @@ case $DISTRO in
 	xenial)
 		ROOTFS="http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.2/release/ubuntu-base-16.04.2-base-arm64.tar.gz"
 		;;
-	sid|jessie)
+	bionic)
+		ROOTFS="http://cdimage.ubuntu.com/ubuntu-base/releases/18.04.1/release/ubuntu-base-18.04.1-base-arm64.tar.gz"
+		;;
+	sid|jessie|buster)
 		ROOTFS="${DISTRO}-base-arm64.tar.gz"
 		METHOD="debootstrap"
 		;;
@@ -282,10 +285,10 @@ EOF
 		rm -f "$DEST/etc/resolv.conf"
 		mv "$DEST/etc/resolv.conf.dist" "$DEST/etc/resolv.conf"
 		;;
-	xenial|sid|jessie)
+	xenial|sid|jessie|buster|bionic)
 		rm "$DEST/etc/resolv.conf"
 		cp /etc/resolv.conf "$DEST/etc/resolv.conf"
-		if [ "$DISTRO" = "xenial" ]; then
+		if [ "$DISTRO" = "xenial" ] || [ "$DISTRO" = "bionic" ]; then
 			DEB=ubuntu
 			DEBUSER=olimex
 			DEBUSERPW=olimex
@@ -303,7 +306,7 @@ EOF
 				dialog	\
 				rsync \
 			"
-		elif [ "$DISTRO" = "sid" -o "$DISTRO" = "jessie" ]; then
+		elif [ "$DISTRO" = "sid" -o "$DISTRO" = "jessie" -o "$DISTRO" = "buster" ]; then
 			DEB=debian
 			DEBUSER=olimex
 			DEBUSERPW=olimex
@@ -319,11 +322,13 @@ EOF
 #!/bin/sh
 set -ex
 export DEBIAN_FRONTEND=noninteractive
+apt-get -y update
+apt-get -y install locales
 locale-gen en_US.UTF-8
 $ADDPPACMD
 apt-get -y update
 apt-get -y install dosfstools curl xz-utils iw rfkill wpasupplicant openssh-server alsa-utils $EXTRADEBS
-apt-get -y remove --purge ureadahead
+apt-get -y remove --purge ureadahead || true
 apt-get -y update
 adduser --gecos $DEBUSER --disabled-login $DEBUSER --uid 1000
 chown -R 1000:1000 /home/$DEBUSER
