@@ -5,7 +5,7 @@ include $(OBJTREE)/include/autoconf.mk
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-CC		= $(CROSS_COMPILE)gcc-4.7
+CC		= $(CROSS_COMPILE)gcc-6
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
