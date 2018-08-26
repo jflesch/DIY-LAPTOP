@@ -95,7 +95,7 @@ deboostrap_rootfs() {
 	cd $TEMP && pwd
 
 	# this is updated very seldom, so is ok to hardcode
-	debian_archive_keyring_deb='https://ftp.de.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2014.3_all.deb'
+	debian_archive_keyring_deb='http://ftp.de.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2014.3_all.deb'
 	wget -O keyring.deb "$debian_archive_keyring_deb"
 	ar -x keyring.deb && rm -f control.tar.gz debian-binary && rm -f keyring.deb
 	DATA=$(ls data.tar.*) && compress=${DATA#data.tar.}
