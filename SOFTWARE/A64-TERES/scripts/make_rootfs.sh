@@ -290,8 +290,8 @@ EOF
 		cp /etc/resolv.conf "$DEST/etc/resolv.conf"
 		if [ "$DISTRO" = "xenial" ] || [ "$DISTRO" = "bionic" ]; then
 			DEB=ubuntu
-			DEBUSER=olimex
-			DEBUSERPW=olimex
+			DEBUSER=jflesch
+			DEBUSERPW=jflesch
 			ADDPPACMD="apt-get -y update && \
 				apt-get install -y software-properties-common && \
 				apt-add-repository -y ppa:longsleep/ubuntu-pine64-flavour-makers \
@@ -308,8 +308,8 @@ EOF
 			"
 		elif [ "$DISTRO" = "sid" -o "$DISTRO" = "jessie" -o "$DISTRO" = "buster" ]; then
 			DEB=debian
-			DEBUSER=olimex
-			DEBUSERPW=olimex
+			DEBUSER=jflesch
+			DEBUSERPW=jflesch
 			ADDPPACMD=""
 			EXTRADEBS="sudo"
 		else
